@@ -1,0 +1,21 @@
+version: '3.2'
+services:
+  mariadb:
+    image: bitnami/mariadb-galera:latest
+    restart: always
+    network_mode: host
+    volumes:
+      - ./conf/my_custom.cnf:/opt/bitnami/mariadb/conf/my_custom.cnf:ro
+      - ./data/mariadb-persistence:/bitnami/mariadb
+    environment:
+      #ALLOW_EMPTY_PASSWORD: "yes"
+      MARIADB_GALERA_CLUSTER_NAME: "my_galera"
+      MARIADB_GALERA_CLUSTER_ADDRESS: "gcomm://<BOOTSTRAP_NODE_IP>:4567,0.0.0.0:4567"
+      MARIADB_GALERA_MARIABACKUP_USER: "my_mariabackup_user"
+      MARIADB_GALERA_MARIABACKUP_PASSWORD: "my_mariabackup_password"
+      MARIADB_USER: "my_user"
+      MARIADB_PASSWORD: "my_password"
+      MARIADB_DATABASE: "my_database"
+      MARIADB_ROOT_USER: "admin"
+      MARIADB_ROOT_PASSWORD: "password123"
+
